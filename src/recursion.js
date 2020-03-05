@@ -29,6 +29,17 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+	if(array.length === 0){
+		return 0;
+	}else{
+		var subArray = array[0];
+		if(Array.isArray(subArray)){
+			var term = arraySum(subArray);
+		}else{
+			var term = subArray;
+		}
+		return term + arraySum(array.slice(1));
+	}
 };
 
 //function stepsToZero(n) {
