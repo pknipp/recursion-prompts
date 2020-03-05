@@ -56,19 +56,18 @@ var isEven = function(n) {
 	}
 };
 
-//function stepsToZero(n) {
-//  if (n === 0) { /* base case */
-//    return 'Reached zero';
-//  } else { /* recursive case */
-//    console.log(n + ' is not zero');
-//    return stepsToZero(n-1);
-//  }
-//}
-
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+	if(n === 0 || n === 1){
+		return 0;
+	}
+	if(n<0){
+		return -sumBelow(-n);
+	}else{
+		return n-1 + sumBelow(n-1);
+	}
 };
 
 // 6. Get the integers within a range (x, y).
