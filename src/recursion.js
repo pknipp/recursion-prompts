@@ -163,7 +163,7 @@ var multiply = function(x, y) {
 		return -multiply(-x,y);
 	}else if(y < 0){
 		return -multiply(x,-y);
-	} if(y === 1){
+	}else if(y === 1){
 		return x;
 	}else{
 		return x + multiply(x, y-1);
@@ -173,6 +173,17 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
+	if(y === 0){
+		return NaN;
+	}else if(x < 0){
+		return -divide(-x,y);
+	}else if(y < 0){
+		return -divide(x,-y);
+	}else if(x < y){
+		return 0;
+	}else{
+		return 1 + divide(x-y,y);
+	}
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -188,6 +199,15 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+	if(str1.length === 0 && str2.length === 0){
+		return true;
+	}else{
+		if(str1[0] !== str2[0]){
+			return false;
+		}else{
+			return compareStr(str1.slice(1),str2.slice(1));
+		}
+	}
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
