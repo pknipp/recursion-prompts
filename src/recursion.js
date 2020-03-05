@@ -93,9 +93,11 @@ var exponent = function(base, exp) {
 	if(exp === 0){
 		return 1;
 	}else if(exp < 0){
-		return 1/exponent(base,-exp);
+		return 1/exponent(base, -exp);
 	}else if(base < 0){
-		return exponent(-base,exp)*(exp%2 == 0)?1:-1;
+		return exponent(-base, exp)*(exp%2 == 0)?1:-1;
+	}else if(exp%2 === 0){
+		return exponent(base*base, exp/2);
 	}else{
 		return base * exponent(base, exp - 1);
 	}
