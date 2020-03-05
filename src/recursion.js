@@ -7,7 +7,22 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+	if (n < 0){return null; }
+	if (n === 0){
+		return 1;
+	}else{
+		return n * factorial(n-1);
+	}
 };
+
+//function stepsToZero(n) {
+//  if (n === 0) { /* base case */
+//    return 'Reached zero';
+//  } else { /* recursive case */
+//    console.log(n + ' is not zero');
+//    return stepsToZero(n-1);
+//  }
+//}
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
