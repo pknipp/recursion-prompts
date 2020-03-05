@@ -6,6 +6,7 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
+// I think that the return for negative integers should be Infinity, not null.
 var factorial = function(n) {
 	if (n < 0){return null; }
 	if (n === 0){
@@ -13,6 +14,21 @@ var factorial = function(n) {
 	}else{
 		return n * factorial(n-1);
 	}
+};
+
+// 2. Compute the sum of an array of integers.
+// sum([1,2,3,4,5,6]); // 21
+var sum = function(array) {
+	if(array.length === 0){
+		return 0;
+	}else{
+		return array[0] + sum(array.slice(1));
+	}
+};
+
+// 3. Sum all numbers in an array containing nested arrays.
+// arraySum([1,[2,3],[[4]],5]); // 15
+var arraySum = function(array) {
 };
 
 //function stepsToZero(n) {
@@ -23,16 +39,6 @@ var factorial = function(n) {
 //    return stepsToZero(n-1);
 //  }
 //}
-
-// 2. Compute the sum of an array of integers.
-// sum([1,2,3,4,5,6]); // 21
-var sum = function(array) {
-};
-
-// 3. Sum all numbers in an array containing nested arrays.
-// arraySum([1,[2,3],[[4]],5]); // 15
-var arraySum = function(array) {
-};
 
 // 4. Check if a number is even.
 var isEven = function(n) {
