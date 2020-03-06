@@ -307,12 +307,14 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
-	if(n === 1){
-		return [1];
-	}else if(n === 2){
-		return [1,1];
+	if(n <= 0){
+		return null;
+	}else if(n === 1){
+		return [0, 1];
 	}else{
-		return fibonacci(n-1).push(fibonacci(n-1)[fibonacci(n-1).length - 2] + fibonacci(n-1)[fibonacci(n-1).length - 1]);
+//		return fibonacci(n-1).push(fibonacci(n-1)[fibonacci(n-1).length - 2] + fibonacci(n-1)[fibonacci(n-1).length - 1]);
+		var array = fibonacci(n-1);
+		return array.concat(array[n - 2] + array[n - 1]);
 	}
 };
 
@@ -453,6 +455,14 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+//	if(array.length === 0){
+//		var out = [];
+//	}else{
+//		var elem = array[0];
+//		var smaller = array.slice(1);
+//		smaller[0] = Math.abs(smaller[0])*((elem < 0)?1:-1);
+//		return [elem].concat(alternateSign(smaller));
+//	}
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
