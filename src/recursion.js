@@ -78,6 +78,9 @@ var range = function(x, y) {
 		return range(y,x).reverse();
 	}else{
 		return range(x,y-1).concat([y-1]);
+//		var arr = range(x,y-1);
+//		arr.push(y-1);
+//		return arr;
 	}
 };
 
@@ -272,6 +275,11 @@ var countOccurrence = function(array, value) {
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+	if(array.length === 0){
+		return [];
+	}else{
+		[callback(array[0])].concat(rMap(array.slice(1),callback));
+	}
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -314,6 +322,8 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+	// I didn't use this helper function, but its use would shorten
+	// time-complexity from O(2**N) to O(N).
 	var fib2 = function(n) {
 		if(n === 1){
 			return [0,1];
@@ -376,6 +386,18 @@ var flatten = function(array) {
 // 31. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 var letterTally = function(str, obj) {
+	if(str.length === 1){
+		return {};
+	}else{
+		var char = str[0];
+		var obj = letterTally(str.slice(1),obj)
+		if(obj[char] === undefined){
+			obj[char] = 1;
+		}else{
+			obj[char] ++;
+		}
+	}
+	return obj;
 };
 
 // 32. Eliminate consecutive duplicates in a list. If the list contains repeated
@@ -384,6 +406,17 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
+	if(list.length === 0){
+		return [];
+	}else{
+		var elem = list[0];
+		var smaller = list.slice(1);
+		if(elem === smaller[0]){
+			return compress(smaller);
+		}else{
+			return [elem].concat(compress(smaller));
+		}
+	}
 };
 
 // 33. Augment every element in a list with a new value where each element is an array
