@@ -72,16 +72,13 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
-//	if(y  === x || y === x + 1){
-//		var out = [];
-//		return out;
-//	}else if(y < x){
-//		var out = range(y,x).reverse();
-//		return out;
-//	}else{
-//		var out = range(x,y-1).push(y-1);
-//		return out;
-//	}
+	if(y  === x || y === x + 1){
+		return [];
+	}else if(y < x){
+		return range(y,x).reverse();
+	}else{
+		return range(x,y-1).concat([y-1]);
+	}
 };
 
 // 7. Compute the exponent of a number.
@@ -119,6 +116,11 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+	if(string.length === 1){
+		return string;
+	}else{
+		return reverse(string.slice(1)) + string[0];
+	}
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -213,16 +215,31 @@ var compareStr = function(str1, str2) {
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+	if(str.length === 0){
+		return [];
+	}else{
+		return [str[0]].concat(createArray(str.slice(1)));
+	}
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+	if(array.length === 0 || array.length === 1){
+		return array;
+	}else{
+		return [array[array.length - 1]].concat(reverseArr(array.slice(1,array.length - 1)),[array[0]]);
+	}
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+	if(length === 0){
+		return [];
+	}else{
+		return buildList(value, length - 1).concat([value]);
+	}
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -237,6 +254,11 @@ var fizzBuzz = function(n) {
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+	if(array.length === 0){
+		return 0;
+	}else{
+		return ((array[0] === value)?1:0) + countOccurrence(array.slice(1), value);
+	}
 };
 
 // 21. Write a recursive version of map.
@@ -269,6 +291,13 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
+	if(n === 1){
+		return [1];
+	}else if(n === 2){
+		return [1,1];
+	}else{
+		return fibonacci(n-1).push(fibonacci(n-1)[fibonacci(n-1).length - 2] + fibonacci(n-1)[fibonacci(n-1).length - 1]);
+	}
 };
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
@@ -277,17 +306,46 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+	var fib2 = function(n) {
+		if(n === 1){
+			return [0,1];
+		}else{
+			var temp = fib2(n-1);
+			return [temp[1],temp[0] + temp[1]];
+		}
+	};
+	if(n < 0){
+		return null;
+	}else if(n == 0){
+		return 0;
+	}else if(n === 1){
+		return 1;
+	}else{
+		return nthFibo(n-2) + nthFibo(n-1);
+	}
 };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(array) {
+	if(array.length == 0){
+		return [];
+	}else{
+		return [array[0].toUpperCase()].concat(capitalizeWords(array.slice(1)));
+	}
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
+	if(array.length == 0){
+		return [];
+	}else{
+		var word = array[0];
+		var Word = word[0].toUpperCase() + word.slice(1);
+		return [Word].concat(capitalizeFirst(array.slice(1)));
+	}
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
@@ -343,6 +401,12 @@ var alternateSign = function(array) {
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+	var numWords = ["zero","one","two","three","four","five","six","seven","eight","nine"];
+	if(str.length === 0){
+		var out = '';
+	}else{
+		if(numWords[str[0]] === undefined)
+	}
 };
 
 
