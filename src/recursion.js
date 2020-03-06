@@ -278,7 +278,8 @@ var rMap = function(array, callback) {
 	if(array.length === 0){
 		return [];
 	}else{
-		[callback(array[0])].concat(rMap(array.slice(1),callback));
+		var element = array[0];
+		return [callback(element)].concat(rMap(array.slice(1),callback));
 	}
 };
 
@@ -306,13 +307,13 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
+// PAK notes that fibonacci(0) should equal [0], not null.
 var fibonacci = function(n) {
 	if(n <= 0){
 		return null;
 	}else if(n === 1){
 		return [0, 1];
 	}else{
-//		return fibonacci(n-1).push(fibonacci(n-1)[fibonacci(n-1).length - 2] + fibonacci(n-1)[fibonacci(n-1).length - 1]);
 		var array = fibonacci(n-1);
 		return array.concat(array[n - 2] + array[n - 1]);
 	}
@@ -326,14 +327,7 @@ var fibonacci = function(n) {
 var nthFibo = function(n) {
 	// I didn't use this helper function, but its use would shorten
 	// time-complexity from O(2**N) to O(N).
-	var fib2 = function(n) {
-		if(n === 1){
-			return [0,1];
-		}else{
-			var temp = fib2(n-1);
-			return [temp[1],temp[0] + temp[1]];
-		}
-	};
+	var fib2 = function(n) {if(n === 1){return [0, 1]; }else{var temp = fib2(n - 1); return [temp[1],temp[0] + temp[1]]; } };
 	if(n < 0){
 		return null;
 	}else if(n == 0){
