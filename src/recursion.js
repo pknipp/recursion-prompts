@@ -11,11 +11,11 @@
 // * or /: 1, 7
 // + or -: 2, 3, 4, 11-13, 20, 22, 23, 25, 26, 29, 31
 // build string: 9, 36
-// build array: 6, 16-19, 25, 27, 28, 32, 34, 35
+// build array: 6, 16-19, 25, 27, 28, 32, 33, 34, 35
 // build object: 31
 // boolean: 4, 8, 10, 15
 // other: 14 (GCD), 21 (map), 38 (binary search), 39 (sort), 40
-// flattening: 3, 22-24, 29, 30, 33, 37?
+// flattening (in order done): 3, 30, 22-24, 29, 37?
 // still problematic: 31 (build object), 35 (alternate signs)
 
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
@@ -305,6 +305,13 @@ var rMap = function(array, callback) {
 var countKeysInObj = function(obj, key) {
 };
 
+// 3. Sum all numbers in an array containing nested arrays.
+// arraySum([1,[2,3],[[4]],5]); // 15
+
+//var arraySum = function(array) {if(array.length === 0){return 0; }else{
+//		var subArray = array[0]; if(Array.isArray(subArray)){var term = arraySum(subArray);
+//		}else{var term = subArray; } return term + arraySum(array.slice(1)); } };
+
 // 23. Write a function that counts the number of times a value occurs in an object.
 // var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countValuesInObj(obj, 'r') // 2
@@ -446,10 +453,10 @@ var compress = function(list) {
 // augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
 	if(array.length === 0){
-		array = [];
+		return [];
 	}else{
 		array[0].push(aug);
-		[array[0]].concat(augmentElements(array.slice(1),aug));
+		return [array[0]].concat(augmentElements(array.slice(1),aug));
 	}
 };
 
