@@ -2,15 +2,22 @@
 
 // Solve the following prompts using recursion.
 
+// In most of the following I use the following sequence:
+// base case(s)
+// edge case(s)
+// general case
+
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 // I think that the return for negative integers should be Infinity, not null.
 var factorial = function(n) {
-	if (n < 0){return null; }
 	if (n === 0){
 		return 1;
+	if (n < 0){
+		return null; 
+	}
 	}else{
 		return n * factorial(n-1);
 	}
@@ -41,8 +48,6 @@ var arraySum = function(array) {
 		return term + arraySum(array.slice(1));
 	}
 };
-
-
 
 // 4. Check if a number is even.
 var isEven = function(n) {
@@ -108,10 +113,10 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
-	if(n <= 0){
-		return false;
-	}else if(n === 1){
+	if(n === 1){
 		return true;
+	}else if(n <= 0){
+		return false;
 	}else{
 		return powerOfTwo(n/2.0);
 	}
@@ -119,7 +124,7 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
-	if(string.length === 1){
+	if(string.length <= 1){
 		return string;
 	}else{
 		return reverse(string.slice(1)) + string[0];
@@ -152,6 +157,7 @@ var modulo = function(x, y) {
 		return -modulo(-x,y);
 	}else if(y < 0){
 		return modulo(x,-y);
+// base case is below, edge cases are above
 	}else if(x < y){
 		return x;
 	}else{
@@ -309,10 +315,10 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // Note: The 0 is not counted.
 // PAK notes that fibonacci(0) should equal [0], not null.
 var fibonacci = function(n) {
-	if(n <= 0){
-		return null;
-	}else if(n === 1){
+	if(n === 1){
 		return [0, 1];
+	}else if(n <= 0){
+		return null;
 	}else{
 		var array = fibonacci(n-1);
 		return array.concat(array[n - 2] + array[n - 1]);
