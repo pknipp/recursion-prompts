@@ -7,6 +7,17 @@
 // edge case(s)
 // general case
 
+// PAK's categorization of these cases:
+// * or /: 1, 7
+// + or -: 2, 3, 4, 11-13, 20, 22, 23, 25, 26, 29, 31
+// build string: 9, 36
+// build array: 6, 16-19, 25, 27, 28, 32, 34, 35
+// build object: 31
+// boolean: 4, 8, 10, 15
+// other: 14 (GCD), 21 (map), 38 (binary search), 39 (sort), 40
+// flattening: 3, 22-24, 29, 30, 33, 37?
+// still problematic: 31 (build object), 35 (alternate signs)
+
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
@@ -15,9 +26,8 @@
 var factorial = function(n) {
 	if (n === 0){
 		return 1;
-	if (n < 0){
+	}else if(n < 0){
 		return null; 
-	}
 	}else{
 		return n * factorial(n-1);
 	}
@@ -157,7 +167,6 @@ var modulo = function(x, y) {
 		return -modulo(-x,y);
 	}else if(y < 0){
 		return modulo(x,-y);
-// base case is below, edge cases are above
 	}else if(x < y){
 		return x;
 	}else{
@@ -383,6 +392,17 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+	if(array.length === 0){
+		return [];
+	}else{
+		var prefix = array[0];
+		var suffix = flatten(array.slice(1));
+		if(Array.isArray(prefix)){
+			return flatten(prefix).concat(suffix);
+		}else{
+			return [prefix].concat(suffix);
+		}
+	}
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
