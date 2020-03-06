@@ -403,9 +403,14 @@ var alternateSign = function(array) {
 var numToText = function(str) {
 	var numWords = ["zero","one","two","three","four","five","six","seven","eight","nine"];
 	if(str.length === 0){
-		var out = '';
+		return '';
 	}else{
-		if(numWords[str[0]] === undefined)
+		var newStr = numToText(str.slice(1));
+		if(numWords[str[0]] === undefined){
+			return str[0] + newStr;
+		}else{
+			return numWords[str[0]] + newStr;
+		}
 	}
 };
 
