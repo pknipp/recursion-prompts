@@ -49,11 +49,11 @@ var arraySum = function(array) {
 	if(array.length === 0){
 		return 0;
 	}else{
-		var subArray = array[0];
-		if(Array.isArray(subArray)){
-			var term = arraySum(subArray);
+		var prefix = array[0];
+		if(Array.isArray(prefix)){
+			var term = arraySum(prefix);
 		}else{
-			var term = subArray;
+			var term = prefix;
 		}
 		return term + arraySum(array.slice(1));
 	}
@@ -303,20 +303,44 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+	var keys = Object.keys(obj);
+	if(keys.length === 0){
+		return 0;
+	}else{
+		var count = (keys[0] === key)?1:0; 
+		var prefix = obj[keys[0]];
+		if(typeof prefix === "object"){
+			count += countKeysInObj(prefix,key);
+		}
+		delete obj[keys[0]];
+		return count + countKeysInObj(obj,key);
+	}
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
-
-//var arraySum = function(array) {if(array.length === 0){return 0; }else{
-//		var subArray = array[0]; if(Array.isArray(subArray)){var term = arraySum(subArray);
-//		}else{var term = subArray; } return term + arraySum(array.slice(1)); } };
+//var arraySum = function(array) {if(array.length === 0){return 0;}else{var prefix = array[0];
+//		if(Array.isArray(prefix)){var term = arraySum(prefix);}else{var term = prefix;}
+//		return term + arraySum(array.slice(1));} };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
 // var obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+var keys = Object.keys(obj);
+	if(keys.length === 0){
+		return 0;
+	}else{
+		var prefix = obj[keys[0]];
+		if(typeof prefix === "object"){
+			var count = countValuesInObj(prefix,value);
+		}else{
+			var count = (prefix === value)?1:0; 
+		}
+		delete obj[keys[0]];
+		return count + countValuesInObj(obj,value);
+	}
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
