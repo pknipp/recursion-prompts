@@ -360,7 +360,8 @@ var countValuesInObj = function(obj, value) {
 	}else if(toggle === 1){
 	  let sum = 0;
 	  for(const key in obj){
-	    sum += (((obj[key] === value)?1:0) + ((typeof obj[key] === "object")?countKeysInObj(obj[key],value):0));
+	  	const val = obj[key];
+	    sum += (((val === value)?1:0) + ((typeof val === "object")?countKeysInObj(val,value):0));
 	  };
 	  return sum
 	}
@@ -370,11 +371,12 @@ var countValuesInObj = function(obj, value) {
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
 	for(let key in obj){
-		if(typeof obj[key] === "object"){
-			obj[key] = replaceKeysInObj(obj[key],oldKey,newKey);
+		let value = obj[key];
+		if(typeof value === "object"){
+			value = replaceKeysInObj(value,oldKey,newKey);
 		}
 		if(key === oldKey){
-			obj[newKey] = obj[oldKey];
+			obj[newKey] = value;
 			delete obj[oldKey];
 		}
 	};
@@ -451,7 +453,23 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
+	let sum = 0;
+	for(const key in obj){
+		const value = obj[key];
+		if(typeof value !== "object"){
+			sum += (((typeof value === "number") && (value%2 === 0))?value:0);
+		}else{
+			sum += nestedEvenSum(value);
+		}
+	};
+	return sum;
 };
+
+//	  let sum = 0;
+//	  for(const key in obj){
+//	    sum += (((obj[key] === value)?1:0) + ((typeof obj[key] === "object")?countKeysInObj(obj[key],value):0));
+//	  };
+//	  return sum
 
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
@@ -553,28 +571,6 @@ var alternateSign = function(array) {
 		return [elem].concat(alternateSign(smaller));
 	}
 };
-
-// 3. Sum all numbers in an array containing nested arrays.
-// arraySum([1,[2,3],[[4]],5]); // 15
-//var arraySum = function(array) {
-//	let toggle = 0;
-//	if(toggle === 0){
-//		if(array.length === 0){
-//			return 0;
-//		}else{
-//			var prefix = array[0];
-//			let term = (Array.isArray(prefix))?arraySum(prefix):prefix;
-//			return term + arraySum(array.slice(1));
-//		}
-//	}else{
-//		let sum = 0;
-//		for(const element of array){
-//			sum +=(Array.isArray(element))?arraySum(element):element;
-//		};
-//		return sum;
-//	}
-//};
-
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
