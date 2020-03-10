@@ -15,7 +15,7 @@
 // build object: 31
 // boolean: 4, 8, 10, 15
 // other: 14 (GCD), 21 (map), 38 (binary search), 39 (sort), 40
-// flattening (in order done): 3, 30, 22-24, 29, 37?
+// flattening (in order done): 3, 30, 22, 23, 24, 29, 37?
 // still problematic: 31 (build object), 35 (alternate signs)
 
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
@@ -46,16 +46,21 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
-	if(array.length === 0){
-		return 0;
-	}else{
-		var prefix = array[0];
-		if(Array.isArray(prefix)){
-			var term = arraySum(prefix);
+	let toggle = 0;
+	if(toggle === 0){
+		if(array.length === 0){
+			return 0;
 		}else{
-			var term = prefix;
+			var prefix = array[0];
+			let term = (Array.isArray(prefix))?arraySum(prefix):prefix;
+			return term + arraySum(array.slice(1));
 		}
-		return term + arraySum(array.slice(1));
+	}else{
+		let sum = 0;
+		for(const element of array){
+			sum +=(Array.isArray(element))?arraySum(element):element;
+		};
+		return sum;
 	}
 };
 
@@ -303,21 +308,30 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
-	let newObj = {};
-	for(const key in obj){
+	const toggle = 1;
+    if(toggle === 0){
+      let newObj = {};
+	  for(const key in obj){
 		newObj[key] = obj[key];
-	};
-	var keys = Object.keys(newObj);
-	if(keys.length === 0){
+	  };
+	  let keys = Object.keys(newObj);
+	  if(keys.length === 0){
 		return 0;
-	}else{
-		var count = (keys[0] === key)?1:0; 
-		var prefix = newObj[keys[0]];
+	  }else{
+		let count = (keys[0] === key)?1:0; 
+		const prefix = newObj[keys[0]];
 		if(typeof prefix === "object"){
-			count += countKeysInObj(prefix,key);
+		  count += countKeysInObj(prefix,key);
 		}
 		delete newObj[keys[0]];
 		return count + countKeysInObj(newObj,key);
+	  }
+	}else if(toggle === 1){
+	  let sum = 0;
+	  for(const keyInner in obj){
+	    sum += (((keyInner === key)?1:0) + ((typeof obj[keyInner] === "object")?countKeysInObj(obj[keyInner],key):0));
+	  };
+	  return sum
 	}
 };
 
@@ -423,16 +437,21 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
-	if(array.length === 0){
-		return [];
-	}else{
-		var prefix = array[0];
-		var suffix = flatten(array.slice(1));
-		if(Array.isArray(prefix)){
-			return flatten(prefix).concat(suffix);
+	const toggle = 1;
+	if(toggle === 0){
+		if(array.length === 0){
+			return [];
 		}else{
-			return [prefix].concat(suffix);
+			var prefix = array[0];
+			var suffix = flatten(array.slice(1));
+			return(Array.isArray(prefix))?flatten(prefix).concat(suffix):[prefix].concat(suffix);
 		}
+	}else{
+		let newArr = [];
+		for(element of array){
+			newArr = newArr.concat((Array.isArray(element))?flatten(element):[element]);
+		};
+		return newArr;
 	}
 };
 
@@ -506,15 +525,37 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
-//	if(array.length === 0){
-//		var out = [];
-//	}else{
-//		var elem = array[0];
-//		var smaller = array.slice(1);
-//		smaller[0] = Math.abs(smaller[0])*((elem < 0)?1:-1);
-//		return [elem].concat(alternateSign(smaller));
-//	}
+	if(array.length === 1){
+		return array;
+	}else{
+		var elem = array[0];
+		var smaller = (array.length > 1)?array.slice(1):[];
+		smaller[0] = Math.abs(smaller[0])*((elem < 0)?1:-1);
+		return [elem].concat(alternateSign(smaller));
+	}
 };
+
+// 3. Sum all numbers in an array containing nested arrays.
+// arraySum([1,[2,3],[[4]],5]); // 15
+//var arraySum = function(array) {
+//	let toggle = 0;
+//	if(toggle === 0){
+//		if(array.length === 0){
+//			return 0;
+//		}else{
+//			var prefix = array[0];
+//			let term = (Array.isArray(prefix))?arraySum(prefix):prefix;
+//			return term + arraySum(array.slice(1));
+//		}
+//	}else{
+//		let sum = 0;
+//		for(const element of array){
+//			sum +=(Array.isArray(element))?arraySum(element):element;
+//		};
+//		return sum;
+//	}
+//};
+
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
