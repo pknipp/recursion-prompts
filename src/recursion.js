@@ -227,6 +227,7 @@ var gcd = function(x, y) {
 			return factor * gcd(x/factor, y/factor);
 		}
 	};
+	// Below is the base case, which happens when numbers are relatively prime.
 	return 1;
 };
 
