@@ -625,10 +625,17 @@ var binarySearch = function(array, target, min, max) {
 // mergeSort([34,7,23,32,5,62]) // [5,7,23,32,34,62]
 // https://www.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/divide-and-conquer-algorithms
 var mergeSort = function(array) {
-	if(array.length === 0){
-		array = [];
+	if(array.length <= 1){
+		return array;
 	}else{
-
+		let target = array[0];
+		let subArray = mergeSort(array.slice(1));
+        let i = 0;
+//The following loop is O(N) but should be made O(log N) using a bisection search.
+        while(target > subArray[i]){
+        	i ++;
+        };
+        return (subArray.slice(0,i)).concat([target].concat(subArray.slice(i)));
 	}
 };
 
