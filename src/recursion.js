@@ -489,7 +489,7 @@ var flatten = function(array) {
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 var letterTally = function(str, obj) {
 	if(typeof obj === "undefined"){
-		let obj = {};
+		obj = {};
 	}
 	if(str.length === 0){
 		let obj = {};
