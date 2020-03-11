@@ -214,18 +214,23 @@ let divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 let gcd = function(x, y) {
+	const toggle = 1;
 	if(x < 0 || y < 0){
 		return null;
 	}
-	let factor = 1;
-	while(factor < Math.min(x,y)){
-		factor ++;
-		if(x%factor === 0 && y%factor === 0){
-			return factor * gcd(x/factor, y/factor);
-		}
-	};
+	if(toggle === 0){
+		let factor = 1;
+		while(factor < Math.min(x,y)){
+			factor ++;
+			if(x%factor === 0 && y%factor === 0){
+				return factor * gcd(x/factor, y/factor);
+			}
+		};
 	// Below is the base case, which happens when numbers are relatively prime.
-	return 1;
+		return 1;
+	}else if(toggle === 1){
+		return (x === 0)?y:(y === 0)?x:gcd(y,x%y);
+	}
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
