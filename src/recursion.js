@@ -298,8 +298,7 @@ var rMap = function(array, callback) {
 	if(array.length === 0){
 		return [];
 	}else{
-		var element = array[0];
-		return [callback(element)].concat(rMap(array.slice(1),callback));
+		return [callback(array[0])].concat(rMap(array.slice(1),callback));
 	}
 };
 
@@ -465,12 +464,6 @@ var nestedEvenSum = function(obj) {
 	return sum;
 };
 
-//	  let sum = 0;
-//	  for(const key in obj){
-//	    sum += (((obj[key] === value)?1:0) + ((typeof obj[key] === "object")?countKeysInObj(obj[key],value):0));
-//	  };
-//	  return sum
-
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
@@ -495,11 +488,14 @@ var flatten = function(array) {
 // 31. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {p:1, o:2, t:2, a:1}
 var letterTally = function(str, obj) {
-	if(str.length === 1){
-		return {};
+	if(typeof obj === "undefined"){
+		let obj = {};
+	}
+	if(str.length === 0){
+		let obj = {};
 	}else{
+		obj = letterTally(str.slice(1),obj);
 		var char = str[0];
-		var obj = letterTally(str.slice(1),obj)
 		if(obj[char] === undefined){
 			obj[char] = 1;
 		}else{
@@ -601,12 +597,39 @@ var tagCount = function(tag, node) {
 // binarySearch(array, 5) // 5
 // https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
 var binarySearch = function(array, target, min, max) {
+	if(typeof min === "undefined"){
+		min = 0;
+		max = array.length-1;
+	}
+	let amin = array[min];
+	let amax = array[max];
+	if(amin === target){
+	  return min;
+	}else if(amax === target){
+	  return max;
+	}else if(min + 1 === max || target < array[0] || target > array[array.length - 1]){
+		return null;
+	}
+    let mid = Math.floor((min + max)/2);
+    let amid = array[mid];
+    if(amid === target){
+      return mid;
+    }else if(amid < target){
+      return binarySearch(array, target, mid, max);
+    }else{
+      return binarySearch(array, target, min, mid);
+    }
 };
 
 // 39. Write a merge sort function.
 // mergeSort([34,7,23,32,5,62]) // [5,7,23,32,34,62]
 // https://www.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/divide-and-conquer-algorithms
 var mergeSort = function(array) {
+	if(array.length === 0){
+		array = [];
+	}else{
+
+	}
 };
 
 // 40. Deeply clone objects and arrays.
