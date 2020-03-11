@@ -559,12 +559,13 @@ var minimizeZeroes = function(array) {
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
 	if(array.length === 1){
+		array[0] = array[0]*((array[0]>0)?1:-1);
 		return array;
 	}else{
-		var elem = array[0];
-		var smaller = (array.length > 1)?array.slice(1):[];
-		smaller[0] = Math.abs(smaller[0])*((elem < 0)?1:-1);
-		return [elem].concat(alternateSign(smaller));
+		var elem = array[array.length - 1];
+		var smaller = alternateSign(array.slice(0,-1));
+		elem = elem * ((elem*smaller[smaller.length - 1] > 0)?-1:1);
+		return smaller.concat([elem]);
 	}
 };
 
