@@ -6,6 +6,7 @@
 // base case(s)
 // edge case(s)
 // general case
+// Later, I modified this by implementing a loop.
 
 // comment inserted on 3/13/2020
 // PAK's categorization of these cases:
